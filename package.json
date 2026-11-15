@@ -1,0 +1,23 @@
+{
+  "name": "avira-carecircle-catalyst",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Elder-led medication and appointments care circle prototype for Catalyst 2026",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "elderly-care",
+    "medication-management",
+    "caregiver-coordination",
+    "catalyst-2026",
+    "promptwars"
+  ],
+  "author": "AVIRA Team",
+  "license": "MIT"
+}

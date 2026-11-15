@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AVIRA CareCircle: Accessible, elder-led medication coordination and shared care circle platform. Built for PromptWars × Catalyst 2026.">
+  <meta name="theme-color" content="#252d37">
+  <title>AVIRA CareCircle — Elder-Led Care &amp; Medication Platform</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- Skip link for keyboard accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Top Navigation Header -->
+  <header class="top-nav" role="banner">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <div class="brand-text">
+          <span class="brand-title">AVIRA <b>CareCircle</b></span>
+          <span class="brand-tag">CATALYST 2026 • LIVE PROTOTYPE</span>
+        </div>
+      </div>
+
+      <!-- Accessibility Toolbar & Controls -->
+      <div class="nav-actions">
+        <!-- Live Demo Clock -->
+        <div class="utc-clock-pill" title="Demo schedules run on UTC time for consistency" aria-label="Current UTC Demo Time">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span class="clock-label">UTC:</span>
+          <time id="liveUtcClock">--:--:--</time>
+        </div>
+
+        <!-- Senior Text Size Toggle -->
+        <button id="toggleFontSize" class="utility-btn" aria-label="Toggle Senior Large Text Sizing" title="Switch between Standard and Senior Large text size">
+          <span class="btn-icon" aria-hidden="true">Aa</span>
+          <span class="btn-text">Senior Text</span>
+        </button>
+
+        <!-- High Contrast Mode Toggle -->
+        <button id="toggleContrast" class="utility-btn" aria-label="Toggle High Contrast Display" title="Switch to maximum contrast black-and-white mode">
+          <span class="btn-icon" aria-hidden="true">◐</span>
+          <span class="btn-text">Contrast</span>
+        </button>
+
+        <!-- Sign Out Button (when logged in) -->
+        <button id="logoutBtn" class="utility-btn btn-danger-soft" hidden aria-label="Sign out of current care circle">
+          Sign out
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main id="main-content" tabindex="-1">
+    <!-- ==================== VIEW 1: LOGIN & ROLE SELECTION ==================== -->
+    <section id="loginView" class="login-section" aria-labelledby="loginHeading">
+      <div class="login-grid">
+        <!-- Left: Welcome & Role Entry -->
+        <div class="login-content">
+          <div class="eyebrow-tag">ELDER-CENTERED CARE PLATFORM</div>
+          <h1 id="loginHeading" class="hero-title">Care that stays <span class="highlight-text">connected.</span></h1>
+          <p class="hero-description">
+            Medication schedules, human-confirmed adherence, and shared calendar in one calm, dignified space. 
+            Built around the elder's decisions.
+          </p>
+
+          <div class="feature-pills" role="list" aria-label="Core platform principles">
+            <span class="feat-pill" role="listitem">✓ Elder-Led Decisions</span>
+            <span class="feat-pill" role="listitem">✓ Human-Confirmed Adherence</span>
+            <span class="feat-pill" role="listitem">✓ Shared Family Visibility</span>
+            <span class="feat-pill" role="listitem">✓ Proactive Due Alerts</span>
+          </div>
+
+          <!-- Role Selection & Passcode Panel -->
+          <div class="card login-card" role="region" aria-label="Sign In to Care Circle">
+            <h2 class="card-title">Select your care circle role</h2>
+            <p class="card-subtitle">Choose a demo profile to test role-aware permissions. Passcodes are pre-configured for verification.</p>
+
+            <fieldset class="role-fieldset">
+              <legend class="sr-only">Choose your care profile</legend>
+              <div class="role-cards" role="radiogroup" aria-label="Demo Profiles">
+                <!-- Elder Card -->
+                <button type="button" class="role-card selected" data-user="elder" role="radio" aria-checked="true" tabindex="0">
+                  <div class="role-badge badge-elder">PRIMARY</div>
+                  <strong class="role-name">Anita Rao</strong>
+                  <span class="role-title">Elder (Self)</span>
+                  <span class="role-passcode">Passcode: <code>2468</code></span>
+                  <small class="role-desc">Full schedule &amp; confirmation access</small>
+                </button>
+
+                <!-- Caregiver Card -->
+                <button type="button" class="role-card" data-user="carer" role="radio" aria-checked="false" tabindex="0">
+                  <div class="role-badge badge-carer">CO-MANAGER</div>
+                  <strong class="role-name">Meera Rao</strong>
+                  <span class="role-title">Caregiver</span>
+                  <span class="role-passcode">Passcode: <code>1357</code></span>
+                  <small class="role-desc">Assists with schedules &amp; reminders</small>
+                </button>
+
+                <!-- Family Card -->
+                <button type="button" class="role-card" data-user="family" role="radio" aria-checked="false" tabindex="0">
+                  <div class="role-badge badge-family">READ-ONLY</div>
+                  <strong class="role-name">Arjun Rao</strong>
+                  <span class="role-title">Family Member</span>
+                  <span class="role-passcode">Passcode: <code>9876</code></span>
+                  <small class="role-desc">Shared view for peace of mind</small>
+                </button>
+              </div>
+            </fieldset>
+
+            <!-- Passcode Input Form -->
+            <form id="loginForm" class="login-form" novalidate>
+              <label for="passcodeInput" class="form-label">
+                Security Passcode
+                <span class="label-help" id="passHelp">(Numeric demo code)</span>
+              </label>
+              <div class="input-action-wrapper">
+                <input 
+                  type="password" 
+                  id="passcodeInput" 
+                  name="passcode" 
+                  class="form-control passcode-input" 
+                  inputmode="numeric" 
+                  pattern="[0-9]*" 
+                  maxlength="8" 
+                  required 
+                  aria-describedby="passHelp loginError" 
+                  placeholder="Enter 4-digit passcode" 
+                  value="2468"
+                >
+                <button type="button" id="togglePassVisibility" class="btn-eye" aria-label="Show or hide passcode" title="Show or hide passcode">
+                  👁
+                </button>
+              </div>
+
+              <div id="loginError" class="form-error" role="alert" aria-live="polite"></div>
+
+              <button type="submit" id="submitLoginBtn" class="btn btn-primary btn-block btn-large">
+                Open CareCircle Dashboard →
+              </button>
+            </form>
+
+            <div class="demo-disclaimer-box" role="note">
+              <strong>Demonstration Prototype:</strong> Synthetic data for Catalyst 2026 Solo AI Hackathon. 
+              Never enter real protected medical information.
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Animated CareCircle Spatial Visualization -->
+        <div class="login-visual-panel" aria-label="Animated CareCircle Concept">
+          <div class="spatial-hero">
+            <!-- 3D Orbit Rings & Core -->
+            <div class="care-sphere" aria-hidden="true">
+              <div class="sphere-orbit orbit-x"></div>
+              <div class="sphere-orbit orbit-y"></div>
+              <div class="sphere-orbit orbit-z"></div>
+              
+              <!-- Core Care Emblem -->
+              <div class="sphere-center">
+                <div class="core-symbol">✚</div>
+                <div class="core-tag">ANITA</div>
+              </div>
+
+              <!-- Orbiting Satellites -->
+              <div class="orbit-sat sat-rx" title="Daily Medication Routine">
+                <span class="sat-icon">Rx</span>
+                <span class="sat-tag">09:00</span>
+              </div>
+              <div class="orbit-sat sat-carer" title="Meera (Caregiver)">
+                <span class="sat-icon">♡</span>
+                <span class="sat-tag">Meera</span>
+              </div>
+              <div class="orbit-sat sat-family" title="Arjun (Family Member)">
+                <span class="sat-icon">◎</span>
+                <span class="sat-tag">Arjun</span>
+              </div>
+            </div>
+
+            <!-- Floating Status Highlights -->
+            <div class="floating-chip chip-top-left" aria-hidden="true">
+              <span class="chip-badge">ACTIVE PLAN</span>
+              <strong>Morning Routine 09:00</strong>
+              <small>Human-Confirmed</small>
+            </div>
+
+            <div class="floating-chip chip-mid-right" aria-hidden="true">
+              <span class="chip-badge">CIRCLE SYNC</span>
+              <strong>3 Members Connected</strong>
+              <small>Elder · Carer · Family</small>
+            </div>
+
+            <div class="floating-chip chip-bottom-left" aria-hidden="true">
+              <span class="chip-badge">TRANSPARENT AI</span>
+              <strong>Synthetic Care Signals</strong>
+              <small>Explainable ML cues</small>
+            </div>
+
+            <div class="visual-caption">
+              <strong>AVIRA Holographic Care Mesh</strong>
+              <span>Live relational visualization of shared care &amp; routine coordination</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: AUTHENTICATED DASHBOARD ==================== -->
+    <section id="appView" class="app-dashboard" hidden aria-labelledby="dashboardHeading">
+      <!-- Welcome Hero Banner -->
+      <div class="dashboard-banner">
+        <div class="banner-welcome">
+          <div class="eyebrow-tag">ACTIVE CARE CIRCLE</div>
+          <h1 id="dashboardHeading" class="banner-title">
+            Good day, <span id="greetingName">Anita</span>.
+          </h1>
+          <p class="banner-subtitle">
+            One shared plan. Complete visibility. Medication decisions stay centered on the elder.
+          </p>
+        </div>
+
+        <div class="banner-status">
+          <div class="user-role-card">
+            <span class="role-label">LOGGED IN PROFILE</span>
+            <div class="role-identity">
+              <strong id="headerUserName">Anita Rao</strong>
+              <span id="roleBadge" class="status-pill pill-elder">ELDER ACCESS</span>
+            </div>
+            <p id="rolePermissionNote" class="role-permission-note">Full schedule and adherence confirmation authority.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Overview Grid (4 Cards) -->
+      <div class="kpi-grid" role="region" aria-label="Care Circle Key Indicators">
+        <article class="card kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">ACTIVE ROUTINES</span>
+            <span class="kpi-icon" aria-hidden="true">💊</span>
+          </div>
+          <div class="kpi-value" id="kpiMedCount">0</div>
+          <span class="kpi-subtext" id="kpiMedSubtext">Scheduled medications</span>
+        </article>
+
+        <article class="card kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">ADHERENCE RATE</span>
+            <span class="kpi-icon" aria-hidden="true">📈</span>
+          </div>
+          <div class="kpi-value" id="kpiAdherenceRate">—</div>
+          <span class="kpi-subtext" id="kpiAdherenceSubtext">Based on recorded events</span>
+        </article>
+
+        <article class="card kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">CARE APPOINTMENTS</span>
+            <span class="kpi-icon" aria-hidden="true">📅</span>
+          </div>
+          <div class="kpi-value" id="kpiAptCount">0</div>
+          <span class="kpi-subtext">Shared care calendar</span>
+        </article>
+
+        <article class="card kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">ALERT ENGINE</span>
+            <span class="kpi-icon" aria-hidden="true">🔔</span>
+          </div>
+          <div class="kpi-value" id="kpiAlertCount">0</div>
+          <span class="kpi-subtext">Active due / overdue notices</span>
+        </article>
+      </div>
+
+      <!-- Main 2-Column Responsive Operational Grid -->
+      <div class="dashboard-grid">
+        <!-- LEFT COLUMN: Schedules & Appointments -->
+        <div class="column-stack">
+          <!-- PANEL 1: Today's Medication Routines -->
+          <section class="card panel-card" aria-labelledby="medScheduleHeading">
+            <div class="panel-header">
+              <div>
+                <span class="panel-eyebrow">TODAY'S SCHEDULE</span>
+                <h2 id="medScheduleHeading" class="panel-title">Medication routines</h2>
+              </div>
+              <span class="status-pill pill-subtle" title="All medication events require explicit human confirmation">
+                Human-Confirmed
+              </span>
+            </div>
+
+            <p class="panel-helper-text">
+              Times displayed in UTC for the demonstration. Mark doses as taken or missed as routines occur.
+            </p>
+
+            <!-- Medication List -->
+            <div id="medicationList" class="routine-list" role="list" aria-label="Medication routines">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Add Medication Accordion (Hidden for Family Role) -->
+            <details id="addMedAccordion" class="accessible-accordion">
+              <summary class="accordion-summary" aria-label="Open form to schedule a new medication">
+                <span class="summary-icon">＋</span> Add new medication routine
+              </summary>
+              <form id="addMedForm" class="accordion-form">
+                <div class="form-row">
+                  <div class="form-group flex-2">
+                    <label for="newMedName" class="form-label">Medication Name *</label>
+                    <input type="text" id="newMedName" name="name" class="form-control" required maxlength="100" placeholder="e.g. Lisinopril or Morning multivitamin">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="newMedTime" class="form-label">Time (UTC) *</label>
+                    <input type="time" id="newMedTime" name="time" class="form-control" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label for="newMedDose" class="form-label">Dosage Instructions</label>
+                    <input type="text" id="newMedDose" name="dose" class="form-control" placeholder="e.g. 1 tablet with water after breakfast">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="newMedNotes" class="form-label">Clinical / Care Notes</label>
+                    <input type="text" id="newMedNotes" name="notes" class="form-control" placeholder="e.g. Check prescription bottle notes">
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Save Medication Routine</button>
+                </div>
+              </form>
+            </details>
+          </section>
+
+          <!-- PANEL 2: Shared Calendar & Appointments -->
+          <section class="card panel-card" aria-labelledby="appointmentsHeading">
+            <div class="panel-header">
+              <div>
+                <span class="panel-eyebrow">CARE CALENDAR</span>
+                <h2 id="appointmentsHeading" class="panel-title">Appointments &amp; reviews</h2>
+              </div>
+              <span class="status-pill pill-subtle">Shared Visibility</span>
+            </div>
+
+            <p class="panel-helper-text">
+              Coordinated appointments visible to elder, caregiver, and authorized family members.
+            </p>
+
+            <div id="appointmentList" class="routine-list" role="list" aria-label="Scheduled appointments">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Add Appointment Accordion (Hidden for Family Role) -->
+            <details id="addAptAccordion" class="accessible-accordion">
+              <summary class="accordion-summary" aria-label="Open form to add a care appointment">
+                <span class="summary-icon">＋</span> Add care appointment
+              </summary>
+              <form id="addAptForm" class="accordion-form">
+                <div class="form-row">
+                  <div class="form-group flex-2">
+                    <label for="newAptTitle" class="form-label">Appointment Title *</label>
+                    <input type="text" id="newAptTitle" name="title" class="form-control" required placeholder="e.g. Cardiology routine review">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="newAptDate" class="form-label">Date *</label>
+                    <input type="date" id="newAptDate" name="date" class="form-control" required>
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="newAptTime" class="form-label">Time (UTC) *</label>
+                    <input type="time" id="newAptTime" name="time" class="form-control" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label for="newAptLocation" class="form-label">Location / Telehealth Link</label>
+                    <input type="text" id="newAptLocation" name="location" class="form-control" placeholder="e.g. Community Health Clinic or Video consultation">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="newAptNotes" class="form-label">Preparation Notes</label>
+                    <input type="text" id="newAptNotes" name="notes" class="form-control" placeholder="e.g. Bring updated blood pressure log">
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Save Appointment</button>
+                </div>
+              </form>
+            </details>
+          </section>
+        </div>
+
+        <!-- RIGHT COLUMN: Visualization, AI Signals, Alerts & Adherence History -->
+        <div class="column-stack">
+          <!-- PANEL 3: Animated Holographic CareCircle Visualization -->
+          <section class="card panel-card" aria-labelledby="visualizerHeading">
+            <div class="panel-header">
+              <div>
+                <span class="panel-eyebrow">CARE CIRCLE TOPOLOGY</span>
+                <h2 id="visualizerHeading" class="panel-title">Interactive CareCircle</h2>
+              </div>
+              <span class="status-pill pill-live">
+                <span class="live-dot" aria-hidden="true"></span> Live Mesh
+              </span>
+            </div>
+
+            <!-- Spatial Care Ring Animation -->
+            <div class="mini-spatial-stage" aria-label="Interactive 3D Care Circle diagram">
+              <div class="spatial-mesh" aria-hidden="true">
+                <!-- Inner Routine Ring -->
+                <div class="mesh-ring mesh-ring-inner"></div>
+                <!-- Outer Relational Ring -->
+                <div class="mesh-ring mesh-ring-outer"></div>
+
+                <!-- Central Elder Node -->
+                <div class="mesh-center-node" id="meshElderNode" title="Anita Rao (Elder) — Primary Decision Center">
+                  <div class="node-emblem">✚</div>
+                  <span class="node-title">ANITA</span>
+                  <small class="node-role">ELDER</small>
+                </div>
+
+                <!-- Orbiting Care Nodes -->
+                <button type="button" class="mesh-node node-carer" id="nodeCarer" title="Meera Rao (Caregiver) — Click to view details">
+                  <span class="node-icon">♡</span>
+                  <span class="node-text">Meera</span>
+                  <span class="node-badge">Carer</span>
+                </button>
+
+                <button type="button" class="mesh-node node-family" id="nodeFamily" title="Arjun Rao (Family) — Click to view details">
+                  <span class="node-icon">◎</span>
+                  <span class="node-text">Arjun</span>
+                  <span class="node-badge">Family</span>
+                </button>
+
+                <button type="button" class="mesh-node node-routine" id="nodeRoutine" title="Active Routines — Click to view details">
+                  <span class="node-icon">Rx</span>
+                  <span class="node-text">Routines</span>
+                  <span class="node-badge" id="meshMedBadge">Active</span>
+                </button>
+              </div>
+
+              <!-- Care Flow Relational Arrows -->
+              <div class="flow-path-labels" aria-hidden="true">
+                <span class="flow-step active">1. ELDER DECISION</span>
+                <span class="flow-arrow">⇄</span>
+                <span class="flow-step">2. CAREGIVER CO-MANAGES</span>
+                <span class="flow-arrow">⇄</span>
+                <span class="flow-step">3. FAMILY OVERSIGHT</span>
+              </div>
+
+              <!-- Dynamic Node Info Box -->
+              <div id="meshInfoBox" class="mesh-info-box" role="status" aria-live="polite">
+                <strong>Care Circle Status:</strong> Anita is at the center of all decisions. Meera and Arjun maintain synchronized visibility.
+              </div>
+            </div>
+          </section>
+
+          <!-- PANEL 4: AI-Assisted Care Follow-Up Signals -->
+          <section class="card panel-card" aria-labelledby="aiSignalsHeading">
+            <div class="panel-header">
+              <div>
+                <span class="panel-eyebrow">TRANSPARENT AI · SYNTHETIC ROUTINE MODEL</span>
+                <h2 id="aiSignalsHeading" class="panel-title">Care follow-up insights</h2>
+              </div>
+              <button type="button" id="refreshAiBtn" class="utility-btn btn-sm" aria-label="Refresh AI Signals">
+                ↻ Refresh
+              </button>
+            </div>
+
+            <p class="panel-helper-text">
+              Explainable prototype logistic regression trained on 60 synthetic scenarios. 
+              Provides non-clinical follow-up cues for caregivers without claiming medical authority.
+            </p>
+
+            <div id="aiSignalsContainer" class="ai-signals-list" role="region" aria-label="AI Follow-Up Signals">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <div class="ai-safety-notice" role="note">
+              <strong>Transparent AI Disclaimer:</strong> This experimental model is trained exclusively on synthetic fictional routines. 
+              It does NOT predict clinical risk, diagnose health conditions, or replace medical consultation. Never alter medications without clinician advice.
+            </div>
+          </section>
+
+          <!-- PANEL 5: Care Alerts & Reminder Engine -->
+          <section class="card panel-card" aria-labelledby="alertsHeading">
+            <div class="panel-header">
+              <div>
+                <span class="panel-eyebrow">PROACTIVE ATTENTION</span>
+                <h2 id="alertsHeading" class="panel-title">Care alerts &amp; reminders</h2>
+              </div>
+              <button type="button" id="checkAlertsBtn" class="btn btn-sm btn-outline" aria-label="Check due reminders now">
+                ⚡ Check now
+              </button>
+            </div>
+
+            <div class="alert-status-banner">
+              <span class="status-indicator-dot"></span>
+              <span>Delivery Engine: <b id="deliveryModeLabel">Preview Ledger</b> (30m lead time, UTC scheduler)</span>
+            </div>
+
+            <div id="alertsContainer" class="alerts-list" role="list" aria-label="Care alerts and reminders">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <div class="preview-notice-box">
+              Transactional email delivery is in <b>preview-only ledger mode</b> unless an authorized Resend API key and recipient emails are configured.
+            </div>
+          </section>
+
+          <!-- PANEL 6: Transparent Adherence History & Export -->
+          <section class="card panel-card" aria-labelledby="adherenceHistoryHeading">
+            <div class="panel-header">
+              <div>
+                <span class="panel-eyebrow">TRANSPARENT AUDIT</span>
+                <h2 id="adherenceHistoryHeading" class="panel-title">Adherence history</h2>
+              </div>
+              <button type="button" id="exportReportBtn" class="btn btn-sm btn-outline" aria-label="Export complete care report as JSON">
+                Export report ↗
+              </button>
+            </div>
+
+            <!-- Adherence Bar Gauge -->
+            <div id="adherenceBarContainer" class="adherence-gauge-box">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Adherence History Ledger -->
+            <div id="historyLedger" class="history-list" role="list" aria-label="Historical adherence log">
+              <!-- Rendered dynamically -->
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessible Toast Notification Region -->
+    <div id="toastNotification" class="toast-notification" role="status" aria-live="polite" aria-atomic="true"></div>
+  </main>
+
+  <!-- Accessible Footer -->
+  <footer class="app-footer" role="contentinfo">
+    <div class="footer-container">
+      <p class="footer-primary">
+        AVIRA CareCircle &bull; PromptWars &times; Catalyst 2026 Solo AI Hackathon &bull; Elderly Care &amp; Medication Management Platform
+      </p>
+      <p class="footer-disclaimer">
+        <b>Strict Ethical Disclaimer:</b> Synthetic demonstration prototype. Not a medical device or regulated clinical software. 
+        Does not replace physician oversight or clinical advice. Never input real personal protected health information (PHI).
+      </p>
+    </div>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

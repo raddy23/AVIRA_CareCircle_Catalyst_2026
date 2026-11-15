@@ -1,0 +1,25 @@
+PROJECT NAME: AVIRA CareCircle — Elder-led Medication & Care Coordination
+
+TAGLINE: One elder. One plan. One circle of care.
+
+CHALLENGE: Elderly Care & Medication Management Platform
+
+PROBLEM: Older adults, caregivers and family members often coordinate medication routines and appointments through scattered calendars, chats and paper notes. Missed events and unclear follow-up make it hard to maintain a shared picture of the day. A simple alarm alone cannot provide a human-confirmed adherence record or shared awareness.
+
+SOLUTION: AVIRA CareCircle is a role-aware care coordination prototype. An elder or caregiver can add medicine schedules and appointments, record whether a dose was taken or missed, and view adherence history. Authorized family demo users get a read-only view. A UTC reminder engine produces due/overdue and appointment notification previews, supports deduplication and can optionally send email through a configured provider. A downloadable JSON report summarizes synthetic recorded events. The grey/white app includes an animated 3D care circle to show the collaborative relationships.
+
+AI/ML COMPONENT: Experimental logistic-regression follow-up classifier, implemented in JavaScript and trained on 60 synthetic examples. Features include recorded missed-event ratio, time-of-day and previous logged event. It displays transparent cues and is NOT validated for real care decisions, diagnoses or clinical predictions.
+
+UNIQUENESS: Human-confirmed adherence instead of pretending alerts prove dose ingestion; coordinated elder/caregiver/family views; transparent reminder delivery states; explainable non-clinical ML signals; lightweight single-command demo; accessible, uncluttered user experience.
+
+STACK: Node.js 20+ built-in HTTP and testing APIs; HTML/CSS/JavaScript; REST endpoints; JSON demo store; CSS 3D animation; experimental locally trained logistic regression; optional Resend email API.
+
+ACTUAL DEMO RESULTS: 17 of 17 API, security and ML integration tests passed on local Node runtime. No real elder outcomes measured. Email delivery is preview-only until configuration. No real health data used.
+
+HOW TO RUN: npm test; npm start; visit http://localhost:8080; elder 2468, caregiver 1357, family 9876.
+
+GITHUB URL: [ADD AFTER PUBLICATION]
+LIVE URL: [ADD ONLY IF DEPLOYED AND TESTED]
+PPT: AVIRA_CareCircle_Catalyst_2026_Professional_Pitch.pptx
+
+IMPORTANT: This package has NOT been submitted to Hack2Skill and a public GitHub repo has NOT been verified. Please publish and submit through https://hack2skill.com/event/promptwars-x-catalyst/ during the official window.
