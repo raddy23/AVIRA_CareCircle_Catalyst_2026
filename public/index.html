@@ -23,6 +23,8 @@
         </div>
       </div>
 
+      <a class="demo-nav-link" href="#demo-guide" aria-label="Open demonstration guide">▶ How to Demo</a>
+
       <!-- Accessibility Toolbar & Controls -->
       <div class="nav-actions">
         <!-- Live Demo Clock -->
@@ -205,6 +207,26 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- Public judging walkthrough: no account, payment, or private data needed -->
+    <section id="demo-guide" class="demo-guide card" aria-labelledby="demoGuideTitle">
+      <div class="demo-guide-heading">
+        <div>
+          <span class="panel-eyebrow">JUDGE / REVIEWER QUICK START</span>
+          <h2 id="demoGuideTitle">How to explore the live prototype</h2>
+          <p>Use fictional profiles and sample data. No registration, payment or real patient information is needed.</p>
+        </div>
+        <a class="demo-guide-start" href="#loginHeading">Start demo ↑</a>
+      </div>
+      <ol class="demo-guide-steps">
+        <li><strong>Sign in as Elder</strong><span>Select Anita, use <code>2468</code>, then click <b>Open CareCircle Dashboard</b>. Review scheduled medicines and shared appointments.</span></li>
+        <li><strong>Track adherence</strong><span>Mark a fictional dose as <b>Taken</b> or <b>Missed</b>; inspect the adherence summary and audit history. Each dose allows one confirmation per day.</span></li>
+        <li><strong>Explore coordination</strong><span>Add a sample medication or appointment, review due / overdue reminders and the experimental AI follow-up panel. All schedule times use UTC.</span></li>
+        <li><strong>Compare permissions</strong><span>Sign out, select Caregiver Meera (<code>1357</code>) to manage routines, then Family Arjun (<code>9876</code>) to see read-only access.</span></li>
+        <li><strong>Evaluate usability</strong><span>Try <b>Senior Text</b> and <b>Contrast</b> in the header; inspect the animated 3D care mesh and export an evidence-linked JSON report.</span></li>
+      </ol>
+      <p class="demo-guide-note"><b>Evaluation notes:</b> 17 automated tests passed in the Antigravity development run. AI signals use a model trained on synthetic examples and are not clinically validated. Email reminders require configuration; the default is preview-only. Hosting may reset demo changes.</p>
     </section>
 
     <!-- ==================== VIEW 2: AUTHENTICATED DASHBOARD ==================== -->
