@@ -1736,3 +1736,55 @@ button:disabled {
   .demo-guide-heading { flex-direction: column; }
   .demo-guide-steps { grid-template-columns: 1fr; }
 }
+
+/* Lightweight animated walkthrough — pure CSS, no external dependencies */
+.demo-motion {
+  margin-top: 18px; padding: 17px 18px 19px; border: 1px solid #d5dde7;
+  border-radius: 14px; background: linear-gradient(135deg,#f8fafc,#eef2f7);
+  overflow: hidden;
+}
+.demo-motion-caption {
+  display: block; color: #475569; font-size: .72rem; font-weight: 800;
+  letter-spacing: 1.25px; margin-bottom: 14px;
+}
+.demo-motion-track { display: flex; align-items: center; gap: 6px; }
+.demo-motion-stage {
+  flex: 0 1 155px; min-width: 0; text-align: center; padding: 4px 0;
+  animation: demo-stage-focus 8s ease-in-out infinite;
+}
+.demo-motion-stage:nth-child(3) { animation-delay: 2s; }
+.demo-motion-stage:nth-child(5) { animation-delay: 4s; }
+.demo-motion-stage:nth-child(7) { animation-delay: 6s; }
+.demo-motion-icon {
+  width: 48px; height: 48px; display: grid; place-items: center;
+  margin: 0 auto 8px; border-radius: 50%; border: 2px solid #94a3b8;
+  background: #fff; color: #1e293b; font-weight: 900; font-size: 1.3rem;
+  box-shadow: 0 3px 12px rgba(30,41,59,.08);
+}
+.demo-motion-stage strong { display: block; color: #1e293b; font-size: .76rem; letter-spacing: .5px; }
+.demo-motion-stage small { display: block; color: #475569; font-size: .75rem; margin-top: 4px; }
+.demo-motion-connector {
+  position: relative; flex: 1; min-width: 14px; height: 2px; background: #cbd5e1;
+  margin-top: -17px; overflow: hidden;
+}
+.demo-motion-connector span {
+  position: absolute; width: 35%; height: 100%; left: -35%;
+  background: #334155; animation: demo-progress 2s linear infinite;
+}
+@keyframes demo-progress { to { left: 105%; } }
+@keyframes demo-stage-focus {
+  0%, 24%, 100% { transform: translateY(0); opacity: .82; }
+  7%, 16% { transform: translateY(-5px); opacity: 1; }
+}
+@media(max-width: 680px) {
+  .demo-motion { padding: 14px 10px; }
+  .demo-motion-track { gap: 2px; }
+  .demo-motion-icon { width: 34px; height: 34px; font-size: .95rem; }
+  .demo-motion-stage strong { font-size: .57rem; letter-spacing: 0; }
+  .demo-motion-stage small { font-size: .58rem; }
+  .demo-motion-connector { min-width: 5px; margin-top: -22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .demo-motion-stage, .demo-motion-connector span { animation: none !important; }
+  .demo-motion-connector span { left: 32%; }
+}
